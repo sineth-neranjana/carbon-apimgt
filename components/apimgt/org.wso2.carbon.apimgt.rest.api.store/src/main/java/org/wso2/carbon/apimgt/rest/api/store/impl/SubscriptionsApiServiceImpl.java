@@ -196,7 +196,7 @@ public class SubscriptionsApiServiceImpl extends SubscriptionsApiService {
             SubscriptionDTO addedSubscriptionDTO = SubscriptionMappingUtil.fromSubscriptionToDTO(addedSubscribedAPI);
             return Response.created(
                     new URI(RestApiConstants.RESOURCE_PATH_SUBSCRIPTIONS + "/" + addedSubscribedAPI.getUUID())).entity(
-                    addedSubscriptionDTO).build();
+                    addedSubscriptionDTO).header("ETag",addedSubscribedAPI.getCreatedTime()).build();
 
         } catch (APIMgtAuthorizationFailedException e) {
             //this occurs when the api:application:tier mapping is not allowed. The reason for the message is taken from

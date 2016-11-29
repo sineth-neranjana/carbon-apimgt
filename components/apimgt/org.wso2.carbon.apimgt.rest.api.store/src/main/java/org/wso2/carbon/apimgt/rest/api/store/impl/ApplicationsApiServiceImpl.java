@@ -145,7 +145,7 @@ public class ApplicationsApiServiceImpl extends ApplicationsApiService {
             //to be set as the Location header
             URI location = new URI(RestApiConstants.RESOURCE_PATH_APPLICATIONS + "/" +
                     createdApplicationDTO.getApplicationId());
-            return Response.created(location).entity(createdApplicationDTO).build();
+            return Response.created(location).entity(createdApplicationDTO).header("ETag",createdApplication.getCreatedTime()).build();
         } catch (APIManagementException | URISyntaxException e) {
             if (RestApiUtil.isDueToResourceAlreadyExists(e)) {
                 RestApiUtil.handleResourceAlreadyExistsError(
@@ -279,7 +279,7 @@ public class ApplicationsApiServiceImpl extends ApplicationsApiService {
                     Application updatedApplication = apiConsumer.getApplicationByUUID(applicationId);
                     ApplicationDTO updatedApplicationDTO = ApplicationMappingUtil
                             .fromApplicationtoDTO(updatedApplication);
-                    return Response.ok().entity(updatedApplicationDTO).build();
+                    return Response.ok().entity(updatedApplicationDTO).header("ETag",updatedApplication.getLastUpdatedTime()).build();
                 } else {
                     RestApiUtil.handleAuthorizationFailure(RestApiConstants.RESOURCE_APPLICATION, applicationId, log);
                 }
