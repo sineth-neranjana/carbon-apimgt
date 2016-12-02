@@ -5912,6 +5912,11 @@ public class ApiMgtDAO {
                 application.setGroupId(rs.getString("GROUP_ID"));
                 application.setUUID(rs.getString("UUID"));
                 application.setTier(rs.getString("APPLICATION_TIER"));
+                Timestamp updatedTime = rs.getTimestamp("UPDATED_TIME");
+                Timestamp createdTime = rs.getTimestamp("CREATED_TIME");
+                application.setLastUpdatedTime(updatedTime == null ? null : String.valueOf(updatedTime.getTime()));
+                application.setCreatedTime(createdTime == null ? null : String.valueOf(createdTime.getTime()));
+
                 subscriber.setId(rs.getInt("SUBSCRIBER_ID"));
             }
         } catch (SQLException e) {
